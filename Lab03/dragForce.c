@@ -46,6 +46,10 @@ int main(){
    Fg=g*mass; // don't need to recalculate
    printf("%.2lf\t%.2lf\t\t%.2lf\n",time,height,velocity);
 
+   /*
+      Restrict to 100,000 iterations. Inside loop: Increase time scale and calculate the Density, Drag force, Acceleration, 
+      Velocity change, Height Change. Then print out the result to the user. When height is negative stop
+   */
    for(int i=0; i<100000;i++){
       
       time = ts_Size*i;
@@ -69,9 +73,18 @@ int main(){
 
 }
 
+/*
+   Get the user input, check if the input is less than zero
+*/
+
 double get_user_input(){
    double temp =0.0f;
    scanf("%lf",&temp);
+   if(temp<0){
+      temp=0;
+      printf("\nInvalid entry only positive numbers\nNumber has been set to:%.1lf",temp);
+      return(temp);
+   }
    return temp;
 }
 
