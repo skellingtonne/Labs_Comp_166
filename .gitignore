@@ -3,3 +3,5 @@ Lab00/main.exe
 Visual Studio Code C.code-workspace
 Lab00/main.c
 Lab03/main.exe
+*.exe
+*.exe
