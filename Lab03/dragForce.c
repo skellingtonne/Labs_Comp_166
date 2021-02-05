@@ -66,6 +66,7 @@ int main(){
       printf("%.2lf\t%.2lf\t\t%.2lf\n",time,height,velocity);
 
    }
+   // Terminal velocity at sea level calculated using the formula from http://hyperphysics.phy-astr.gsu.edu/hbase/airfri2.html
    termVelocity = sqrt((2*mass*g)/(drag_Coef*density(0.0)*cs_Area));
    printf("\nTheoretical terminal velocity at sea level: %.2lf",termVelocity);
 
