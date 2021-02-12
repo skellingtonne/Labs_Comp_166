@@ -40,36 +40,40 @@ int main(){
    cs_Area=get_user_input();
    printf("\nPlease Enter the time step size: ");
    ts_Size=get_user_input();
-   
+   FILE *out_file = fopen("Output.txt","w");
+
    // Print out top row and start calculations
+   fprintf(out_file,"Height: %.2lf mass: %.2lf drag_Coef: %.2lf cs_Area: %.2lf ts_Size: %.2lf ",height,mass,drag_Coef,cs_Area,ts_Size);
    printf("\nTime\tHeight\t\tVelocity\n");
+   fprintf(out_file,"\nTime\tHeight\t\tVelocity\n");
    Fg=g*mass; // don't need to recalculate
    printf("%.2lf\t%.2lf\t\t%.2lf\n",time,height,velocity);
-
+   fprintf(out_file,"%.2lf\t%.2lf\t\t%.2lf\n",time,height,velocity);
    /*
       Restrict to 100,000 iterations. Inside loop: Increase time scale and calculate the Density, Drag force, Acceleration, 
-      Velocity change, Height Change. Then print out the result to the user. When height is negative stop
+      Velocity change, Height Change. Then print out the result to the user. When height is 0 stop
    */
    for(int i=0; i<100000;i++){
       
       time = ts_Size*i;
 
       p=density(height);
-
+      
       Fd=-0.5f*(drag_Coef*p*cs_Area*pow(velocity,2.0f));
       accel=(Fg+Fd)/mass;
 
       velocity=velocity+accel*ts_Size;
       height -= velocity*ts_Size;
 
-      if (height<0){break;}
+      if (height<=0){break;}
       printf("%.2lf\t%.2lf\t\t%.2lf\n",time,height,velocity);
-
+      fprintf(out_file,"%.2lf\t%.2lf\t\t%.2lf\n",time,height,velocity);
    }
    // Terminal velocity at sea level calculated using the formula from http://hyperphysics.phy-astr.gsu.edu/hbase/airfri2.html
    termVelocity = sqrt((2*mass*g)/(drag_Coef*density(0.0)*cs_Area));
    printf("\nTheoretical terminal velocity at sea level: %.2lf",termVelocity);
-
+   fprintf(out_file,"\nTheoretical terminal velocity at sea level: %.2lf",termVelocity);
+   fclose(out_file);
    return(EXIT_SUCCESS);
 
 }
@@ -81,8 +85,8 @@ int main(){
 double get_user_input(){
    double temp =0.0f;
    scanf("%lf",&temp);
-   if(temp<0){
-      temp=0;
+   if(temp<0.0){
+      temp=0.0;
       printf("\nInvalid entry only positive numbers\nNumber has been set to:%.1lf",temp);
       return(temp);
    }
