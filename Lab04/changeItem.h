@@ -10,6 +10,6 @@
 #define CHANGEITEM_H
 
 double get_user_input(void);
-double changeItem(double changeTotal, double billAmount, const char *billNames );
+double changeItem(double changeTotal, double billAmount, const char *singleName, const char *pluralName);
 
 #endif // CHANGEITEM_H

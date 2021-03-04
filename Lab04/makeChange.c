@@ -15,8 +15,8 @@
         8) Use #ifndef to prevent multiple inclusions of the header file
         9) Remember to include your header file in your changeItem.c so that the compiler will complain (in a
         convenient place) if you did not implement what you promised. You should always include
+    
     Duncan Stannard C0444224
- 
     Feb, 12, 2021
 */
 
@@ -38,6 +38,7 @@ int main(void) {
     //declare variables
     const double BILLAMOUNT[N_CURRENCY] = {20.00, 10.00, 5.00, 2.00, 1.00, 0.25, 0.10, 0.05};
     const char *BILLNAMES[N_CURRENCY] = {"Twenty", "Ten", "Five", "Twoonie", "loonie", "Quarter", "Dime", "Nickel"}; //char *names// *<- req for c to st ore strings not just single chars
+    const char *BILLNAMESPLURAL[N_CURRENCY] = {"Twenties", "Tens", "Fives", "Twoonies", "loonies", "Quarters", "Dimes", "Nickels"};
     double price, paid, changeTotal, tempChange;
     int totalTender;
 
@@ -50,9 +51,14 @@ int main(void) {
 
     //Error Handling
     if (paid < price) {
-        printf("\nYou need more money\n");
+        printf("\nYou need $ %.2lf more\n",price-paid);
+        return EXIT_FAILURE;
+    }else if (price<0 || paid<0)
+    {
+        printf("\nPlease enter a positive number\n");
         return EXIT_FAILURE;
     }
+    
 
     //Change calculation
     changeTotal = paid - price;
@@ -73,7 +79,7 @@ int main(void) {
 
     // for loop for displaying bill totals
     for (int i = 0; i < N_CURRENCY; i++) {
-       changeTotal= changeItem(changeTotal,BILLAMOUNT[i],BILLNAMES[i]);
+       changeTotal= changeItem(changeTotal,BILLAMOUNT[i],BILLNAMES[i],BILLNAMESPLURAL[i]);
     }
 
     return EXIT_SUCCESS;
