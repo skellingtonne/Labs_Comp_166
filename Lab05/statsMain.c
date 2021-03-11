@@ -65,8 +65,7 @@ int main(int argc, char **argv)
     }
     
     // While loop to read out values from the files
-    while (fscanf(inFile,"%lf",&tempValues)==1)
-    {
+    while (fscanf(inFile,"%lf",&tempValues)==1){
         sampleSums+=tempValues;
         sampleSumsSq+=tempValues*tempValues;
         valCount++;
@@ -74,6 +73,7 @@ int main(int argc, char **argv)
     // ERR checking if more than 2 values are in file or if there was a reading error
     if(valCount<=2){
         printf("\nless than 2 samples in file OR Read error\n");
+        return(EXIT_FAILURE);
     }
     // Close the file
     fclose(inFile);
@@ -98,7 +98,8 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
     // Cleanup
-     fclose(outFile);
+    fclose(outFile);
+    free(fileOutName);
     return(EXIT_SUCCESS);
 }
 
